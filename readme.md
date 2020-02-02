@@ -1,3 +1,5 @@
+# volunteer_app
+
 This application is built using the MERN stack.
 
 ```
@@ -50,4 +52,4 @@ run ` npm run lint ` to check for lint errors/warnings
 
 
 
-# volunteer_app
+
