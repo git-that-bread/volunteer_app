@@ -2,3 +2,6 @@
 /client/node_modules
 
 /server/node_modules
+
+# keys
+/server/config/default.json
