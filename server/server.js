@@ -16,6 +16,8 @@ app.use(express.json({ extended: false }));
 app.get('/', (req, res) => res.send('Hello world!'));
 
 // TODO: Add routes middleware
+const volRouter = require('./routes/volunteers');
+app.use('/volunteers', volRouter);
 
 const port = process.env.PORT || 8000;
 

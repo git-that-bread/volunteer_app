@@ -1,3 +1,4 @@
 {
-    "mongoURI": "mongodb://admin:purple23@ds021650.mlab.com:21650/shopping_list"
+       "mongoURI": "mongodb://volunteerinfouser:Spr1Ng@ds127783.mlab.com:27783/volunteerinfo"
 }
+ //"mongoURI": "mongodb://admin:purple23@ds021650.mlab.com:21650/shopping_list"
