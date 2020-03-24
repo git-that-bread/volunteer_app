@@ -46,7 +46,7 @@ export default class VolunteerList extends Component {
        this.setState({
             volunteers: this.state.volunteers.filter(el =>el.userName !== userName)
         })
-        window.location = '/';
+        window.location = '/volunteers';
     }
 
     EditVolunteer(username)

@@ -4,6 +4,7 @@ import Links from "./components/links.component"
 import VolunteersList from "./components/VolunteerList.component";
 import AddVolunteer from "./components/AddVolunteer.component";
 import EditVolunteer from "./components/EditVolunteer.component";
+import AddOrg from "./components/AddOrg.component";
 import './App.css';
 
 
@@ -13,9 +14,10 @@ class App extends Component {
       <Router>
       <Links />
       
-       <Route path = "/" exact component={VolunteersList}/>
+       <Route path = "/volunteers" exact component={VolunteersList}/>
        <Route path = "/add" component={AddVolunteer}/>
        <Route path = "/edit" component ={EditVolunteer}/>
+       <Route path = "/orgs/add" component ={AddOrg}/>
       </Router>
     );
   }

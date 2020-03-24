@@ -19,6 +19,9 @@ app.get('/', (req, res) => res.send('Hello world!'));
 const volRouter = require('./routes/volunteers');
 app.use('/volunteers', volRouter);
 
+const orgRouter = require('./routes/organization');
+app.use('/orgs', orgRouter);
+
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
