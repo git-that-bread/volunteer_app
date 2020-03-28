@@ -9,7 +9,7 @@ router.route('/orgs/:orgName').get((req, res) => {
     //.catch(err => res.status(400).json('Uhoh, error while retrieving volunteers: ' + err));
 });
 
-router.route('/orgs').get((req, res) => {
+router.route('/').get((req, res) => {
     Organization.find({}, function(err, orgs) {
         var orgsList = {};
         res.render('/orgs', {orgs: orgs});
@@ -71,6 +71,7 @@ router.route('/').post((req, res) => {
     .then(() => 
     {
         console.log(newShift);
+        res.json('Success, new shift created')
     })
     .catch(err => res.status(400).json('Uhoh, error while adding new shift: ' + err));
 });
