@@ -16,7 +16,11 @@ router.route('/:username').delete((req, res) => {
 router.route('/add').post((req, res) => {
     const name = req.body.name;
     const username = req.body.username;
-    const newVol = new Volunteer({name, username});
+    const password = req.body.password;
+    const volEmail = req.body.volEmail;
+    const shifts = [];
+    const organizations = [];
+    const newVol = new Volunteer({name, username, password, volEmail, shifts, organizations});
    
     newVol.save()
     .then(() => res.json('Success, new volunteer added'))

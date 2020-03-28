@@ -7,11 +7,16 @@ export default class AddVolunteer extends Component {
 
         this.whenNameModified = this.whenNameModified.bind(this);
         this.whenUserNameModified = this.whenUserNameModified.bind(this);
+        this.whenPasswordModified = this.whenPasswordModified.bind(this);
+        this.whenVolEmailModified = this.whenVolEmailModified.bind(this);
         this.submission = this.submission.bind(this);
 
         this.state ={
             name: '',
             username: '',
+            password: '',
+            volEmail: ''
+
         }
     }
 
@@ -27,12 +32,26 @@ export default class AddVolunteer extends Component {
         });
     }
 
+    whenPasswordModified(thisObject){
+        this.setState({
+            password: thisObject.target.value
+        });
+    }
+
+    whenVolEmailModified(thisObject){
+        this.setState({
+            volEmail: thisObject.target.value
+        });
+    }
+
     submission(thisObject){
         thisObject.preventDefault();
 
         const newVolunteer = {
             name: this.state.name,
             username: this.state.username,
+            password: this.state.password,
+            volEmail: this.state.volEmail
         }
 
         console.log(newVolunteer);
@@ -49,15 +68,23 @@ export default class AddVolunteer extends Component {
     render() {
         return (
             <div style={{marginTop: 20}}>
-            <h3>Add a Volunteer</h3>
+            <h3>Create a Volunteer Account</h3>
             <form onSubmit={this.submission}>
                 <div className="form-group">
-                    <label>Volunteer's Name:</label>
+                    <label>Name:</label>
                     <input type="text" className="form-control" value={this.state.name} onChange={this.whenNameModified}/>
                 </div>
                 <div className="form-group">
-                    <label>Volunteer's Username:</label>
+                    <label>Username:</label>
                     <input type="text" className="form-control" value={this.state.username} onChange={this.whenUserNameModified}/>
+                </div>
+                <div className="form-group">
+                    <label>Password:</label>
+                    <input type="text" className="form-control" value={this.state.password} onChange={this.whenPasswordModified}/>
+                </div>
+                <div className="form-group">
+                    <label>Email:</label>
+                    <input type="text" className="form-control" value={this.state.volEmail} onChange={this.whenVolEmailModified}/>
                 </div>
                 <div className="form-group">
                     <input type="submit" value="Submit" className="btn btn-primary"/>

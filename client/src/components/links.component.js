@@ -15,7 +15,7 @@ export default class Nav extends Component {
                     <Link to="/orgs/add" className="nav-link">Create an Organization</Link>
                     </li>
                     <li className="navbar-item active">
-                    <Link to="/add" className="nav-link">Add Volunteer</Link>
+                    <Link to="/volunteers/add" className="nav-link">Create a Volunteer Account</Link>
                     </li> 
                 </ul>    
                 </div>

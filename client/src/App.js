@@ -15,7 +15,7 @@ class App extends Component {
       <Links />
       
        <Route path = "/volunteers" exact component={VolunteersList}/>
-       <Route path = "/add" component={AddVolunteer}/>
+       <Route path = "/volunteers/add" component={AddVolunteer}/>
        <Route path = "/edit" component ={EditVolunteer}/>
        <Route path = "/orgs/add" component ={AddOrg}/>
       </Router>
