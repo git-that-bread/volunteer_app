@@ -23,6 +23,11 @@ const shiftSchema = new theSchema({
     organization:
     {
         type: mongoose.Schema.Types.ObjectId
+    },
+    verified:
+    {
+        type: Boolean,
+        required: true
     }
     
 },
