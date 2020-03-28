@@ -22,12 +22,12 @@ const orgSchema = new theSchema({
         trim: true,
         required: true
     },
-    phone:
+    orgPhone:
     {
         type: Number,
         trim: true
     },
-    email:
+    orgEmail:
     {
         type: String,
         trim: true,

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Organization = require('../models/org.model');
 let Admin = require('../models/admin.model');
+let Shift = require('../models/shift.model');
 
 router.route('/orgs/:orgName').get((req, res) => {
     Organization.findOne({orgName: req.params.orgName})
@@ -9,38 +10,69 @@ router.route('/orgs/:orgName').get((req, res) => {
 });
 
 router.route('/orgs').get((req, res) => {
-    Organization.find({})
-    .then(org => res.json(org))
+    Organization.find({}, function(err, orgs) {
+        var orgsList = {};
+        res.render('/orgs', {orgs: orgs});
+    });
+    
 });
 
 router.route('/orgs/:orgName').delete((req, res) => {
     Organization.findOneAndDelete({orgName: req.params.orgName})
     .then(() => res.json('Success, organization deleted'))
     .catch(err => res.status(400).json('Uhoh, error while deleting organization: ' + err));
-})
+});
 
-router.route('/orgs/add').post((req, res) => {
-    const name = req.body.name;
-    const adminName = req.body.adminName;
-    const adminUsername = req.body.adminUsername;
-    const adminPassword = req.body.adminPassword;
+router.route('/add').post((req, res) => {
+    const orgName = req.body.name;
+    const organization = req.body.name;
+    const name = req.body.adminName;
+    const adminUsername = req.body.adminUsername
+    const username = req.body.adminUsername;
+    const password = req.body.adminPassword;
     const adminEmail = req.body.adminEmail;
     const adminPhone = req.body.adminPhone;
 
     const location = req.body.location;
-    const phone = req.body.orgPhone;
-    const email = req.body.orgEmail;
+    const orgPhone = req.body.orgPhone;
+    const orgEmail = req.body.orgEmail;
 
-    const newOrg = new Organization({name, adminUsername, location, phone, email});
+    console.log(req.body);
+
+    const newOrg = new Organization({orgName, adminUsername, location, orgPhone, orgEmail});
    
     newOrg.save()
-    .then(() => res.json('Success, new organization added'))
-    .catch(err => res.status(400).json('Uhoh, error while adding new organization: ' + err));
+    .then((orgResult) => 
+    {
+        console.log(orgResult)
+        const newAdmin = new Admin({name, username, password, adminEmail, adminPhone, organization});
+        newAdmin.save()
+        .then((result) => 
+        {
+        console.log(result)
+        res.json('Success, new admin created')
+        }) 
+        .catch(err => {console.log(err) 
+        res.status(400).json('Uhoh, error while creating admin account: ' + err)});
+    })
+    .catch(err => {console.log(err)
+    res.status(400).json('Uhoh, error while adding new organization: ' + err)});
+});
 
-    const newAdmin = new Admin({adminName, adminUsername, adminPassword, adminEmail, adminPhone, name});
-    newAdmin.save()
-    .then(() => res.json('Sucess, new admin created'))
-    .catch(err => res.status(400).json('Uhoh, error while creating admin account: ' + err));
+router.route('/').post((req, res) => {
+    const volunteers = req.body.volunteers;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+    const organization = req.body.organization;
+
+    const newShift = new Shift({volunteers, startTime, endTime, organization});
+
+    newShift.save()
+    .then(() => 
+    {
+        console.log(newShift);
+    })
+    .catch(err => res.status(400).json('Uhoh, error while adding new shift: ' + err));
 });
 
 module.exports = router;

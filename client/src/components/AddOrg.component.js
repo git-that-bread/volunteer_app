@@ -87,7 +87,7 @@ export default class AddOrg extends Component {
             location: this.state.location,
             orgEmail: this.state.orgEmail,
             orgPhone: this.state.orgPhone,
-            adminName: this.state.admin,
+            adminName: this.state.adminName,
             adminUsername: this.state.adminUsername,
             adminPassword: this.state.adminPassword,
             adminEmail: this.state.adminEmail,

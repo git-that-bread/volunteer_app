@@ -23,13 +23,13 @@ const adminSchema = new theSchema({
         trim: true,
         minlength: 8
     },
-    email:
+    adminEmail:
     {
         type: String,
         unique: true,
         trim: true,
     },
-    phone:
+    adminPhone:
     {
         type: Number,
         unique: true,
