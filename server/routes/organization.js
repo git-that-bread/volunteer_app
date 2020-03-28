@@ -37,6 +37,7 @@ router.route('/add').post((req, res) => {
     const location = req.body.location;
     const orgPhone = req.body.orgPhone;
     const orgEmail = req.body.orgEmail;
+    const orgType = req.body.orgType;
     //The following three variables represent the tables for shifts, admins and volunteers of an organization.
     const admins = req.body.admins;
     const shifts = req.body.shifts;
@@ -44,7 +45,7 @@ router.route('/add').post((req, res) => {
 
     console.log(req.body);
 
-    const newOrg = new Organization({orgName, adminUsername, location, orgPhone, orgEmail, shifts, volunteers, admins});
+    const newOrg = new Organization({orgName, adminUsername, orgType, location, orgPhone, orgEmail, shifts, volunteers, admins});
    
     newOrg.save()
     .then((orgResult) => 

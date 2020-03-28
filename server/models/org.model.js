@@ -16,6 +16,11 @@ const orgSchema = new theSchema({
         trim: true,
         required: true
     },
+    orgType:
+    {
+        type: String,
+        trim: true
+    },
     location:
     {
         type: String,
