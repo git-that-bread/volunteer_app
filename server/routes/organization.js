@@ -9,6 +9,7 @@ router.route('/orgs/:orgName').get((req, res) => {
     //.catch(err => res.status(400).json('Uhoh, error while retrieving volunteers: ' + err));
 });
 
+//not implemented, needs work. This will return list of volunteers associated with that organization
 router.route('/').get((req, res) => {
     Organization.find({}, function(err, orgs) {
         var orgsList = {};
@@ -36,10 +37,15 @@ router.route('/add').post((req, res) => {
     const location = req.body.location;
     const orgPhone = req.body.orgPhone;
     const orgEmail = req.body.orgEmail;
+    const orgType = req.body.orgType;
+    //The following three variables represent the tables for shifts, admins and volunteers of an organization.
+    const admins = req.body.admins;
+    const shifts = req.body.shifts;
+    const volunteers = req.body.volunteers;
 
     console.log(req.body);
 
-    const newOrg = new Organization({orgName, adminUsername, location, orgPhone, orgEmail});
+    const newOrg = new Organization({orgName, adminUsername, orgType, location, orgPhone, orgEmail, shifts, volunteers, admins});
    
     newOrg.save()
     .then((orgResult) => 

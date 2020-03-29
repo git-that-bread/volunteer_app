@@ -24,7 +24,6 @@ const shiftSchema = new theSchema({
     {
         type: mongoose.Schema.Types.ObjectId
     }
-    
 },
 {
     timestamps: true,

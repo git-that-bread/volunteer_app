@@ -16,6 +16,11 @@ const orgSchema = new theSchema({
         trim: true,
         required: true
     },
+    orgType:
+    {
+        type: String,
+        trim: true
+    },
     location:
     {
         type: String,
@@ -32,7 +37,19 @@ const orgSchema = new theSchema({
         type: String,
         trim: true,
         required: true
-    }
+    },
+    shifts:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shift'
+    }],
+    volunteers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Volunteer'
+    }],
+    admins: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shift'
+    }]
 },
 {
     timestamps: true,
