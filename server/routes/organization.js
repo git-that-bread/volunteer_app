@@ -38,14 +38,10 @@ router.route('/add').post((req, res) => {
     const orgPhone = req.body.orgPhone;
     const orgEmail = req.body.orgEmail;
     const orgType = req.body.orgType;
-    //The following three variables represent the tables for shifts, admins and volunteers of an organization.
-    const admins = req.body.admins;
-    const shifts = req.body.shifts;
-    const volunteers = req.body.volunteers;
-
+    
     console.log(req.body);
 
-    const newOrg = new Organization({orgName, adminUsername, orgType, location, orgPhone, orgEmail, shifts, volunteers, admins});
+    const newOrg = new Organization({orgName, adminUsername, orgType, location, orgPhone, orgEmail});
    
     newOrg.save()
     .then((orgResult) => 
