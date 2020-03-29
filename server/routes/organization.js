@@ -70,9 +70,8 @@ router.route('/').post((req, res) => {
     const startTime = req.body.startTime;
     const endTime = req.body.endTime;
     const organization = req.body.organization;
-    const verified = false;
 
-    const newShift = new Shift({volunteers, startTime, endTime, organization, verified});
+    const newShift = new Shift({volunteers, startTime, endTime, organization});
 
     newShift.save()
     .then(() => 
