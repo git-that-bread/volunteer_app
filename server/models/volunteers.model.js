@@ -10,26 +10,6 @@ const volSchema = new theSchema({
         required: true,
         minlength: 5
     },
-    username:
-    {
-        type: String,
-        unique: true,
-        trim: true,
-        minlength: 5
-    },
-    password:
-    {
-        type: String,
-        trim: true,
-        required: true,
-        minlength: 5
-    },
-    volEmail:
-    {
-        type: String,
-        trim: true,
-        required: true
-    },
     shifts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Shift'

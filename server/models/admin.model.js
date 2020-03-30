@@ -10,25 +10,6 @@ const adminSchema = new theSchema({
         required: true,
         minlength: 5
     },
-    username:
-    {
-        type: String,
-        unique: true,
-        trim: true,
-        minlength: 5
-    },
-    password:
-    {
-        type: String,
-        trim: true,
-        minlength: 8
-    },
-    adminEmail:
-    {
-        type: String,
-        unique: true,
-        trim: true,
-    },
     adminPhone:
     {
         type: Number,
