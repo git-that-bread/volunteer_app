@@ -23,11 +23,12 @@ const validateSignup = (req, res, next) => {
   }
 
 const generateUserType = (req, res, next) => {
-    if(!req.body.volunteer && !req.body.admin) {
+    let userType = req.body.userType;
+    if(!userType) {
         console.error("No type of account/user specified by the client");
-        return res.status(403).json({status: "fail", message: "Error: Must specify the type of user i.e volunteer, admin."})
+        return res.status(403).json({status: "fail", message: "Error: Must specify the type of user i.e userType: 'admin'"})
     }
-    if(req.body.volunteer) {
+    if(userType === 'volunteer') {
         // create volunteer and add to db
         const newVolunteer = new Volunteer({name: req.body.name});
         newVolunteer.save().then((res) => {
@@ -40,7 +41,7 @@ const generateUserType = (req, res, next) => {
             return res.status(404).json({status: "fail", message: "Failed to generate volunteer user"});
         });
     }
-    if(req.body.admin) {
+    if(userType === 'admin') {
         // create org and add to db
         const newOrganization = new Organization({orgName: req.body.orgName, orgType: req.body.orgType, location: req.body.location, orgPhone: req.body.orgPhone, orgEmail: req.body.orgEmail});
         newOrganization.save().then((res) => {
