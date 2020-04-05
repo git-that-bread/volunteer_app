@@ -9,8 +9,8 @@ const router = require('express').Router();
 const authRouter = require('./auth');
 router.use('/auth', authRouter);
 
-const volRouter = require('./volunteers');
-router.use('/volunteers', volRouter);
+const volRouter = require('./volunteer');
+router.use('/volunteer', volRouter);
 
 const orgRouter = require('./organization');
 router.use('/orgs', orgRouter);
