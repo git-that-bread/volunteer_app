@@ -25,7 +25,7 @@ export default class VolunteerList extends Component {
 
     componentDidMount(){
 
-        axios.get('http://localhost:8000/volunteers/').then(res => {
+        axios.get('http://localhost:8000/volunteer/').then(res => {
             
             this.setState({volunteers: res.data})
         })
@@ -41,12 +41,12 @@ export default class VolunteerList extends Component {
     }
     deleteVolunteer(userName)
     {
-        axios.delete('http://localhost:8000/volunteers/'+ userName).then(res=>console.log(res.data)).catch((err) => {console.log(err.response)});
+        axios.delete('http://localhost:8000/volunteer/'+ userName).then(res=>console.log(res.data)).catch((err) => {console.log(err.response)});
 
        this.setState({
             volunteers: this.state.volunteers.filter(el =>el.userName !== userName)
         })
-        window.location = '/volunteers';
+        window.location = '/volunteer';
     }
 
     EditVolunteer(username)
