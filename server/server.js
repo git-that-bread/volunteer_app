@@ -1,5 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+
 const connectDB = require('./config/db');
 
 const app = express();
@@ -15,12 +17,8 @@ app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('Hello world!'));
 
-// TODO: Add routes middleware
-const volRouter = require('./routes/volunteers');
-app.use('/volunteers', volRouter);
-
-const orgRouter = require('./routes/organization');
-app.use('/orgs', orgRouter);
+const apiRouter = require('./routes/api/index.js');
+app.use('/api', apiRouter);
 
 const port = process.env.PORT || 8000;
 
