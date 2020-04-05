@@ -18,8 +18,8 @@ const adminSchema = new theSchema({
     },
     organization:
     {
-        type: String,
-        trim: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Organization'
     }
 
 },
