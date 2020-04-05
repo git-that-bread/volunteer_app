@@ -20,6 +20,14 @@ app.get('/', (req, res) => res.send('Hello world!'));
 const apiRouter = require('./routes/api/index.js');
 app.use('/api', apiRouter);
 
+app.use(function (error, req, res, next) {
+    console.error(error);
+    if(!error.status) {
+        return res.status(500).json( { error: { code: 'UNKNOWN_ERROR', message: 'An unknown error occurred.' } });
+    } 
+    return res.status(error.status).json( { error: { code: error.code, message: error.message } });
+});
+
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
