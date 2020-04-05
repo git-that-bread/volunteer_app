@@ -8,6 +8,7 @@ const Admin = require('../models/admin.model');
 const Organization = require('../models/org.model');
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 /**
  * createUser - Helper method
@@ -122,11 +123,12 @@ const signUp = async (userInfo) => {
  * @memberof module:services/userService~userService
  **/
 const logIn = async (userInfo) => {
+    console.log(userInfo)
     let username = userInfo.username;
     let email = userInfo.email;
     let password = userInfo.password;
 
-    const countUser = await User.countDocuments({email});
+    const countUser = await User.countDocuments({username});
     if(countUser === 0) {
         throw ({ status: 404, code: 'USER_NOT_EXISTS', message: 'E-mail address does not exist.' });
     }
