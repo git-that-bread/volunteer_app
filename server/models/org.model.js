@@ -10,12 +10,6 @@ const orgSchema = new theSchema({
         required: true,
         minlength: 5
     },
-    adminUsername:
-    {
-        type: String,
-        trim: true,
-        required: true
-    },
     orgType:
     {
         type: String,
