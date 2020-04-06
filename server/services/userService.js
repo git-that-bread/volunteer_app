@@ -19,26 +19,18 @@ const jwt = require('jsonwebtoken');
  * @param {object} userInfo  - An object representing the user info from a request.
  * @returns {User} - The User object created and saved to the database.
  **/        
-const createUser = async (user, userInfo) => {
+const createUser = async (userInfo) => {
     // create User and add to db
-    let _admin = null;
-    let _volunteer = null;
     let username = userInfo.username;
     let email = userInfo.email;
     let password = userInfo.password;
 
-    // check if user is volunteer or organization
-    if(user.type === 'admin') {
-        _admin = user.id;
-    } else {
-        _volunteer = user.id;
-    }
     const countUser = await User.countDocuments({email});
     if(countUser > 0) {
         throw ({ status: 409, code: 'USER_ALREADY_EXISTS', message: 'A user already exists with this email.' });
     }
     const hash = await bcrypt.hash(password, 10);
-    const newUser = new User({username, password:hash, email, _admin, _volunteer});
+    const newUser = new User({username, password:hash, email});
     const savedUser = await newUser.save();
     console.log(`User ${savedUser} successfully created!`);
     return savedUser;
@@ -56,11 +48,7 @@ const createVolunteer = async (userInfo) => {
     const newVolunteer = new Volunteer({name: userInfo.name});
     const savedVolunteer = await newVolunteer.save();
     console.log(`New volunteer user successfully added to the db ${savedVolunteer}`);
-    return {
-        type: 'volunteer',
-        obj: savedVolunteer,
-        id: savedVolunteer._id
-    }
+    return savedVolunteer;
 };
 
 /**
@@ -81,12 +69,7 @@ const createAdmin = async (userInfo) => {
         { _id: savedOrg._id },
         { $push: { admins: savedAdmin._id  } });
     console.log("Organization admins field updated ", updatedOrgRes);
-    return {
-        type: 'admin',
-        obj: savedAdmin,
-        org: savedOrg,
-        id: savedAdmin._id
-    }
+    return savedAdmin;
 };
 
 /**
@@ -99,18 +82,27 @@ const createAdmin = async (userInfo) => {
  * @memberof module:services/userService~userService
  **/ 
 const signUp = async (userInfo) => {
+    // TODO: add transactions later on to ensure User and underlying user object are both created and saved in the db.
+    // Create user
+    const user = await createUser(userInfo);
     const userType = userInfo.userType;
-    let user;
+    let underlyingUser;
+    let update;
     // check userType
     if(userType === 'volunteer') {
         // create volunteer and add to db
-        user = await createVolunteer(userInfo);
-    }
-    if(userType === 'admin') {
+        underlyingUser = await createVolunteer(userInfo);
+        user._volunteer = underlyingUser._id;
+    }else if(userType === 'admin') {
         // create org and add to db
-        user = await createAdmin(userInfo);
+        underlyingUser = await createAdmin(userInfo);
+        user._admin = underlyingUser._id;
     }
-    return createUser(user, userInfo);
+
+    // Associate user with underlying user
+    const updatedUser = await user.save();
+    console.log(updatedUser);
+    return updatedUser;
 }
 
 /**
