@@ -56,7 +56,7 @@ export default class AddVolunteer extends Component {
 
         console.log(newVolunteer);
 
-        axios.post('http://localhost:8000/volunteers/add', newVolunteer)
+        axios.post('http://localhost:8000/volunteer/add', newVolunteer)
         .catch(function(err){
             console.log(err.response);
         });
