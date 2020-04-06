@@ -28,7 +28,7 @@ const createUser = async (user, userInfo) => {
     let password = userInfo.password;
 
     // check if user is volunteer or organization
-    if(user.type === 'volunteer') {
+    if(user.type === 'admin') {
         _admin = user.id;
     } else {
         _volunteer = user.id;
@@ -39,7 +39,7 @@ const createUser = async (user, userInfo) => {
     }
     const hash = await bcrypt.hash(password, 10);
     const newUser = new User({username, password:hash, email, _admin, _volunteer});
-    const savedUser = newUser.save();
+    const savedUser = await newUser.save();
     console.log(`User ${savedUser} successfully created!`);
     return savedUser;
 };
@@ -108,7 +108,7 @@ const signUp = async (userInfo) => {
     }
     if(userType === 'admin') {
         // create org and add to db
-        user = createAdmin(userInfo);
+        user = await createAdmin(userInfo);
     }
     return createUser(user, userInfo);
 }
