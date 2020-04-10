@@ -8,8 +8,8 @@ const middleware = require('./middleware/middleware');
 const userService = require('../../services/userService.js')
 
 /**
- * Route serving signup form.
- * @name get/signup
+ * POST - Route serving user signup.
+ * @name post/signup
  * @function
  * @memberof module:routers/auth~authRouter
  */
@@ -25,7 +25,7 @@ router.route('/signup').post(middleware.signup.validateSignup, async (req, res, 
 
 /**
  * Route serving login form.
- * @name get/alogin
+ * @name post/login
  * @function
  * @memberof module:routers/auth~authRouter
  * @inner
