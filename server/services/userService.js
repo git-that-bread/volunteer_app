@@ -133,9 +133,9 @@ const logIn = async (userInfo) => {
             userId: user._id
         }, process.env.JWT_KEY, { expiresIn: '24h' });
         return {
-            token: token,
-            userId: user._id
-        }
+            user,
+            token
+        };
     }
     throw ({ status: 401, code: 'LOGIN_INVALID', message: 'Invalid authentication credentials.' });
 }

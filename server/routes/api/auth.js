@@ -32,8 +32,8 @@ router.route('/signup').post(middleware.signup.validateSignup, async (req, res, 
  */
 router.route('/login').post(middleware.login.validateLogin, async (req, res, next) => {
     try {
-        let user = await userService.logIn(req.body);
-        return res.status(200).json({ data: user });
+        let data = await userService.logIn(req.body);
+        return res.status(200).json(data);
     } catch (error) {
         next(error);
     }
