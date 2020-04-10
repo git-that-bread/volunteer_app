@@ -2,39 +2,39 @@ const mongoose = require('mongoose');
 
 const theSchema = mongoose.Schema;
 
-const shiftSchema = new theSchema({
+const eventSchema = new theSchema({
    
     volunteers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Volunteer'
-
-    }], 
+    }],
+    shifts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shift'
+    }],  
     startTime:
     {
         type: Date,
         required: true
-
     },
     endTime:
     {
         type: Date,
         required: true
     },
-    eventID:
+    organization:
     {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
+        type: mongoose.Schema.Types.ObjectId
     },
-    organizationID:
+    location:
     {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
+        type: String
     }
 },
 {
     timestamps: true,
 });
 
-const shift = mongoose.model('shift', shiftSchema);
+const event = mongoose.model('event', eventSchema);
 
-module.exports = shift;
+module.exports = event;
