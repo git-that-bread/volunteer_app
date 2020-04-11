@@ -49,6 +49,7 @@ function parseDate(dateInput)
  * @param {Number} numHours - the number of hours the event will last
  * @param {id} eventID - the object id of the event
  * @param {id} organizationID - the object id of the organization associated with the event
+ * @returns {Array} shiftArray - the array of shift objects
  **/
 async function createShiftsArray(globalStart, globalEnd, numHours, eventID, organizationID)
 {
@@ -95,7 +96,7 @@ async function createShift(startTime, endTime, eventID, organizationID)
 }
 
 /**
- * createEvent - Helper method
+ * createEvent - Service method
  * This helper method handles event creation. It will create the event object, then call other functions to create the shifts for the event, and finally 
  * update itself to add those shifts to the event object's shifts array. The event must be created before the shifts, otherwise the shifts will not have 
  * an eventID to associate themselves with.
@@ -135,7 +136,29 @@ const createEvent = async (eventInfo) => {
 
     return savedEvent;
 };
+/**
+ * deleteEvent - Service Method
+ * This method is used to delete and event. It first deletes all the shifts corresponding to that event, then deletes the event itself
+ * then updates the corresponding organization to remove the event from the events[] array
+ * @method deleteEvent
+ * @param {object} eventInfo - An object containing the event object ID (id) and the organization id (organization)
+ * @returns {} - void
+ */
+const deleteEvent = async (eventInfo) => {
+    //First delete all corresponding Shifts to the event
+    const deleteShifts = await Shift.deleteMany({eventID: eventInfo.id});
+    //Now delete event itself
+    const deleteEvent = await Event.findOneAndDelete({_id: eventInfo.id});
+    //Now update Org to remove this event from events[]
+    const deleteEntryOrg = await Organization.findOneAndUpdate(
+        {_id: eventInfo.organization},
+        { $pull: {events: eventInfo.id}}
+    );
+
+    return;
+};
 
 module.exports = {
-    createEvent
+    createEvent,
+    deleteEvent
 };

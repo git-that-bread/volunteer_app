@@ -32,11 +32,17 @@ router.route('/event').post(async (req, res, next) => {
     }
 });
 
-router.route('/event/:id').delete((req, res) => {
-    Event.findByIdAndDelete(req.params.id)
+router.route('/event').delete(async (req, res, next) => {
+    try {
+        let eventD = await adminService.deleteEvent(req.body);
+        return res.status(200).json({data: eventD});
+    } catch (error) {
+        next(error);
+    }
+    /*Event.findOneAndDelete({id: req.params.id})
     .then(() => res.json('Success, event deleted'))
-    .catch(err => res.status(400).json('Uhoh, error while deleting event: ' + err));
+    .catch(err => res.status(400).json('Uhoh, error while deleting event: ' + err));*/
     //Will want to first make another call to find and delete all the shifts associated with that event. Search shifts that have this event's eventID
-})
+});
 
 module.exports = router;
