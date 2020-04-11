@@ -124,8 +124,13 @@ const createEvent = async (eventInfo) => {
     var fullArray = await createShiftsArray(startTime, endTime, numHours, eventID, organizationID);
 
     const updatedEventShiftArray = await Event.findOneAndUpdate(
-       {_id: savedEvent.id},
-       {$push: {shifts: fullArray}}
+       { _id: savedEvent.id },
+       { $push: { shifts: fullArray } }
+    );
+
+    const updateOrgWithEvent = await Organization.findOneAndUpdate(
+        { _id: organizationID },
+        { $push: { events: savedEvent.id } }
     );
 
     return savedEvent;
