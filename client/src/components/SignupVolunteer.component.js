@@ -11,11 +11,7 @@ class SignupVolunteer extends Component {
             username: '',
             email: '',
             password: '',
-            adminName: '',
-            orgName: '',
-            userType: '',
-            location: '',
-            orgEmail: ''
+            userType: ''
         };
     }
 

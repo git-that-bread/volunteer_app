@@ -1,32 +1,31 @@
 import React from 'react';
-import { Nav, Navbar,NavDropdown} from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { Link } from 'react-router-dom';
+import MainNav from "./MainNav.component";
+import MainFooter from "./MainFooter.component";
+import { Jumbotron, Button, Row, Col} from "react-bootstrap";
 
 const Home = () => {
     return (
         <div>
-           <Navbar bg="light" expand="lg">
-              <Navbar.Brand href="/">Volunteer App</Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mr-auto">
-                <Nav.Link as={Link} to="/" >Home</Nav.Link>
-                <Nav.Link as={Link} to="/" >Create an Organization Account</Nav.Link>
-              </Nav>
-                <Nav className="ml-auto">
-                 
-                  <NavDropdown title="Login" id="basic-nav-dropdown">
-                    <NavDropdown.Item as={Link} to="/loginOrganization" >Organization</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/loginVolunteer" >Volunteer</NavDropdown.Item>
-                  </NavDropdown>
-                  <NavDropdown title="Signup" id="basic-nav-dropdown">
-                    <NavDropdown.Item as={Link} to="/signupOrganization" >Organization</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/signupVolunteer" >Volunteer</NavDropdown.Item>
-                  </NavDropdown>
-                </Nav>
-              </Navbar.Collapse>
-            </Navbar>
+          <MainNav></MainNav>
+          <Jumbotron>
+            <Row>
+                <Col>
+                    <h1>A platform for non-profits to manage and track their volunteering activities.</h1>
+                    <p>
+                        This is a simple hero unit, a simple jumbotron-style component for calling
+                        extra attention to featured content or information.
+                    </p>
+                    <p>
+                        <Button variant="primary">Learn more</Button>
+                    </p>
+                </Col>
+                <Col>
+                    <img className="landing-image" src= {process.env.PUBLIC_URL + "/assets/hugo-productive-work.png"} ></img>
+                </Col>
+            </Row>
+           </Jumbotron>
+           <MainFooter>
+           </MainFooter>
            
         </div>
     );

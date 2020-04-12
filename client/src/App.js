@@ -6,7 +6,8 @@ import LoginVolunteer from './components/LoginVolunteer.component';
 import LoginOrganization from './components/LoginOrganization.component';
 import SignupVolunteer from './components/SignupVolunteer.component';
 import SignupOrganization from './components/SignupOrganization.component';
-
+import Dashboard from './components/Dashboard.component';
+import Events from './components/Events.component';
 import './App.css';
 
 
@@ -20,20 +21,11 @@ class App extends Component {
           <Route path="/signupVolunteer" exact component={SignupVolunteer} />
           <Route path="/signupOrganization" exact component={SignupOrganization} />
           <Route path="/" exact component={Home} />
-          <Authenticated>
-            {/* All protected routes go here */}
-            {/* <Route path="/dashboard" exact component={Dashboard}/> */}
-          </Authenticated>
+          <Route path="/dashboard" component={Dashboard} />
+          {/* <Authenticated>
+          </Authenticated> */}
         </Switch>
       </BrowserRouter>
-      // <Router>
-      // <Links />
-      
-      //  {/* <Route path = "/volunteer" exact component={VolunteersList}/> */}
-      //  <Route path = "/volunteer/add" component={AddVolunteer}/>
-      //  <Route path = "/edit" component ={EditVolunteer}/>
-      //  <Route path = "/orgs/add" component ={AddOrg}/>
-      // </Router>
     );
   }
 }
