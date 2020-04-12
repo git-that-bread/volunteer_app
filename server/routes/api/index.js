@@ -12,6 +12,9 @@ router.use('/auth', authRouter);
 const adminRouter = require('./admin');
 router.use('/admin', adminRouter);
 
+const volRouter = require('./volunteer');
+router.use('/volunteer', volRouter);
+
 const orgRouter = require('./organization');
 router.use('/orgs', orgRouter);
 
