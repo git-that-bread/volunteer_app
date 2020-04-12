@@ -9,6 +9,7 @@ const Organization = require('../models/org.model');
 const User = require('../models/user.model');
 const Event = require('../models/event.model');
 const Shift = require('../models/shift.model');
+const volShift = require('../models/volunteerShift.model');
 
  /** 
   * calcHours - Helper method
@@ -157,8 +158,44 @@ const deleteEvent = async (eventInfo) => {
 
     return;
 };
+/**
+ * updateEvent - Service Method
+ * This method is used to update an existing event object
+ * @method updateEvent
+ * @param {eventInfo} eventInfo - object containing all the event information for the new updated entry
+ * @returns {} - void
+ */
+const updateEvent = async (eventInfo) => {
+    const updateEv = await Event.findOneAndUpdate(
+        {_id: evID},
+        { $push: {startTime: eventInfo.startTime, endTime:eventInfo.endTime, 
+            organization: eventInfo.organization, location: eventInfo.organization}}
+    );
+    /*Will need to go and edit shifts associated with the event if the times are changed. This will be a mess
+      because it would require an update to 
+        1) All existing shifts for the event
+        2) All existing volunteerShifts for the shifts in that event (some may no longer exist due to time change)
+        3) The orgs event array
+    */
+};
+
+/**
+ * verifyShift - Service Method
+ * This method is used to update and verify a volunteerShift object
+ * @method verifyShift
+ * @param {shiftInfo} shiftInfo - contains the volunteerShift info, such as the corresponding shift ID for the volShift
+ * @returns {} - void 
+ */
+const verifyShift = async (shiftInfo) => {
+    const verify = await volShift.findOneAndUpdate(
+        {shift: shiftInfo.shift},
+        { $push: {verified: true} }
+    );
+};
 
 module.exports = {
     createEvent,
-    deleteEvent
+    deleteEvent,
+    updateEvent,
+    verifyShift
 };

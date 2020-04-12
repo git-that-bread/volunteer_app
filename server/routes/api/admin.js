@@ -17,11 +17,11 @@ router.route('/remove/:username').delete((req, res) => {
     .catch(err => res.status(400).json('Uhoh, error while deleting volunteer: ' + err));
 });
 
-router.route('/verify/:id').post((req, res) => {
+/*router.route('/verify/:id').post((req, res) => {
     const filter = {id: req.params.id};
     const update = {verified: true};
     Volshift.findOneAndUpdate(filter, update, {new: true})
-});
+});*/
 
 router.route('/event').post(async (req, res, next) => {
     try {
@@ -39,10 +39,24 @@ router.route('/event').delete(async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-    /*Event.findOneAndDelete({id: req.params.id})
-    .then(() => res.json('Success, event deleted'))
-    .catch(err => res.status(400).json('Uhoh, error while deleting event: ' + err));*/
-    //Will want to first make another call to find and delete all the shifts associated with that event. Search shifts that have this event's eventID
+});
+
+router.route('/event/update').post(async (req, res, next) => {
+    try {
+        let eventupDate = await adminService.updateEvent(req.body);
+        return res.status(200).json({data: eventUpdate});
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.route('/verify').post(async (req, res, next) => {
+    try {
+        let verifyShift = await adminService.verifyShift(req.body);
+        return res.status(200).json({data: verifyShift});
+    } catch (error) {
+        next(error);
+    }
 });
 
 module.exports = router;
