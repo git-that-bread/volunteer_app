@@ -47,10 +47,28 @@ const shiftSignUp = async (shiftInfo) => {
  * go to the corresponding event and shift in order to delete the volunteer object ID from volunteers[] in each
  * 
  * @method volShiftDelete
+ * @param {volShiftInfo} - an object containing information about the volunteer shift
+ * @returns {} - void
  */
 
 const volShiftDelete = async(volShiftInfo) => {
-    //volShift.findOneAndDelete({id: req.params.id})
+    let volShiftID = volShiftInfo.volShiftID
+    let volunteer = volShiftInfo.volunteerID
+    let shiftID = volShiftInfo.shiftID
+    let eventID = volShiftInfo.eventID
+    //Delete volunteerShift object
+    const deleteVolShift = await volShift.findOneAndDelete({_id: volShiftID});
+    //Remove volunteer from volunteers[] within shift object
+    const removeVolFromShift = await Shift.findOneAndUpdate(
+        {_id: shiftID},
+        {$pull: {volunteers: volunteer}}
+    );
+    //Now remove volunteer from volunteers[] within event object
+    const removeVolFromEvent = await Event.findOneAndUpdate(
+        {_id: eventID},
+        {$pull: {volunteers: volunteer}}
+    );
+    return;
 }
 
 module.exports = {

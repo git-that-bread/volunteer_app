@@ -169,7 +169,7 @@ const updateEvent = async (eventInfo) => {
     const updateEv = await Event.findOneAndUpdate(
         {_id: eventInfo.id},
         { $set: {startTime: eventInfo.startTime, endTime:eventInfo.endTime, 
-            organization: eventInfo.organization, location: eventInfo.organization}}
+            organization: eventInfo.organization, location: eventInfo.organization}}, {new: true}
     );
     /*Will need to go and edit shifts associated with the event if the times are changed. This will be a mess
       because it would require an update to 
@@ -187,10 +187,10 @@ const updateEvent = async (eventInfo) => {
  * @param {shiftInfo} shiftInfo - contains the volunteerShift info, such as the corresponding shift ID for the volShift
  * @returns {verifShift} - updated volShift object 
  */
-const verifyShift = async (shiftInfo) => {
+const verifyShift = async (volShiftInfo) => {
     const verifShift = await volShift.findOneAndUpdate(
-        {shift: shiftInfo.shift},
-        { $set: {verified: true} }
+        {_id: volShiftInfo.id},
+        { $set: {verified: true} }, {new: true}
     );
     return verifShift;
 };
@@ -208,7 +208,7 @@ const verifyShift = async (shiftInfo) => {
     const upShift = await Shift.findOneAndUpdate(
         {_id: shiftInfo.id},
         {$set: {startTime:shiftInfo.startTime, endTime:shiftInfo.endTime, eventID:shiftInfo.eventID, 
-        organizationID:shiftInfo.organizationID}}
+        organizationID:shiftInfo.organizationID}}, {new: true}
     );
     return upShift;
  };
