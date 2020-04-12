@@ -89,7 +89,7 @@ async function createShift(startTime, endTime, eventID, organizationID)
     //create shift object
     console.log('creating shift, start is: ' + startTime);
     console.log('creating shift, end is: ' + endTime);
-    console.log('this eventID is: ' + eventID);
+    //console.log('this eventID is: ' + eventID);
     const newShift = new Shift({startTime, endTime, eventID, organizationID});
     const savedShift = await newShift.save();
     //return shift object
@@ -163,12 +163,12 @@ const deleteEvent = async (eventInfo) => {
  * This method is used to update an existing event object
  * @method updateEvent
  * @param {eventInfo} eventInfo - object containing all the event information for the new updated entry
- * @returns {} - void
+ * @returns {updateEv} - updated event object
  */
 const updateEvent = async (eventInfo) => {
     const updateEv = await Event.findOneAndUpdate(
-        {_id: evID},
-        { $push: {startTime: eventInfo.startTime, endTime:eventInfo.endTime, 
+        {_id: eventInfo.id},
+        { $set: {startTime: eventInfo.startTime, endTime:eventInfo.endTime, 
             organization: eventInfo.organization, location: eventInfo.organization}}
     );
     /*Will need to go and edit shifts associated with the event if the times are changed. This will be a mess
@@ -177,6 +177,7 @@ const updateEvent = async (eventInfo) => {
         2) All existing volunteerShifts for the shifts in that event (some may no longer exist due to time change)
         3) The orgs event array
     */
+   return updateEv;
 };
 
 /**
@@ -184,18 +185,52 @@ const updateEvent = async (eventInfo) => {
  * This method is used to update and verify a volunteerShift object
  * @method verifyShift
  * @param {shiftInfo} shiftInfo - contains the volunteerShift info, such as the corresponding shift ID for the volShift
- * @returns {} - void 
+ * @returns {verifShift} - updated volShift object 
  */
 const verifyShift = async (shiftInfo) => {
-    const verify = await volShift.findOneAndUpdate(
+    const verifShift = await volShift.findOneAndUpdate(
         {shift: shiftInfo.shift},
-        { $push: {verified: true} }
+        { $set: {verified: true} }
     );
+    return verifShift;
 };
+
+/**
+ * updateShift - Service Method
+ * This method is used to update a shift
+ * 
+ * @method updateShift
+ * @param {shiftInfo} shiftInfo - contains the new shift information. needs a 'shiftID' to specify the shift object ID. 
+ * @returns {upShift} - updated shift object 
+ */
+ const updateShift = async (shiftInfo) => {
+
+    const upShift = await Shift.findOneAndUpdate(
+        {_id: shiftInfo.id},
+        {$set: {startTime:shiftInfo.startTime, endTime:shiftInfo.endTime, eventID:shiftInfo.eventID, 
+        organizationID:shiftInfo.organizationID}}
+    );
+    return upShift;
+ };
+
+ /**
+ * deleteShift - Service Method
+ * This method is used to update a shift
+ * 
+ * @method deleteShift
+ * @param {shiftInfo} shiftInfo - contains the shift's object ID
+ * @returns {} - void 
+ */
+ const deleteShift = async (shiftInfo) => {
+    const dShift = await Shift.findOneAndDelete({_id: shiftInfo.id});
+    return;
+ }
 
 module.exports = {
     createEvent,
     deleteEvent,
     updateEvent,
+    updateShift,
+    deleteShift,
     verifyShift
 };

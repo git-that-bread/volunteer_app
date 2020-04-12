@@ -50,6 +50,24 @@ router.route('/event/update').post(async (req, res, next) => {
     }
 });
 
+router.route('/shift').post(async (req,res, next) => {
+    try {
+        let shiftUpdate = await adminService.updateShift(req.body);
+        return res.status(200).json({data: shiftUpdate});
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.route('/shift').delete(async (req, res, next) => {
+    try {
+        let shiftD = await adminService.deleteShift(req.body);
+        return res.status(200).json({data: shiftD});
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.route('/verify').post(async (req, res, next) => {
     try {
         let verifyShift = await adminService.verifyShift(req.body);
