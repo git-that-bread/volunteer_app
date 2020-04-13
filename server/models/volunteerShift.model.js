@@ -14,10 +14,15 @@ const volShiftSchema = new theSchema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Shift'
     },
-    organization:
+    organizationID:
     {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Organization'
+    },
+    eventID:
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     },
     verified:
     {

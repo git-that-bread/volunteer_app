@@ -1,16 +1,28 @@
 const router = require('express').Router();
-let Volunteer = require('../../models/volunteer.model');
+const jwt = require('jsonwebtoken');
+const volunteerService = require('../../services/volunteerService.js');
+let Organization = require('../../models/org.model');
+let Admin = require('../../models/admin.model');
+let Shift = require('../../models/shift.model');
+let volShift = require('../../models/volunteerShift.model');
 
-router.route('/').get((req, res) => {
-    Volunteer.find()
-    .then(volunteers => res.json(volunteers))
-    .catch(err => res.status(400).json('Uhoh, error while retrieving volunteers: ' + err));
+
+router.route('/shift').delete(async (req, res, next) => {
+    try {
+        let deletedShift = await volunteerService.volShiftDelete(req.body);
+        return res.status(200).json({data: deletedShift});
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.route('/:username').delete((req, res) => {
-    Volunteer.findOneAndDelete({username: req.params.username})
-    .then(() => res.json('Success, volunteer deleted'))
-    .catch(err => res.status(400).json('Uhoh, error while deleting volunteer: ' + err));
+router.route('/shift').post(async (req, res, next) => {
+    try {
+        let shiftSignedUp = await volunteerService.shiftSignUp(req.body);
+        return res.status(200).json({data: shiftSignedUp});
+    } catch (error) {
+        next(error);
+    }
 });
 
 module.exports = router;
