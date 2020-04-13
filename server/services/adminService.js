@@ -207,15 +207,14 @@ const verifyShift = async (volShiftInfo) => {
 
     const upShift = await Shift.findOneAndUpdate(
         {_id: shiftInfo.id},
-        {$set: {startTime:shiftInfo.startTime, endTime:shiftInfo.endTime, eventID:shiftInfo.eventID, 
-        organizationID:shiftInfo.organizationID}}, {new: true}
+        {$set: {startTime:shiftInfo.startTime, endTime:shiftInfo.endTime, eventID:shiftInfo.eventID}}, {new: true}
     );
     return upShift;
  };
 
  /**
  * deleteShift - Service Method
- * This method is used to update a shift
+ * This method is used to delete a shift
  * 
  * @method deleteShift
  * @param {shiftInfo} shiftInfo - contains the shift's object ID
@@ -223,6 +222,12 @@ const verifyShift = async (volShiftInfo) => {
  */
  const deleteShift = async (shiftInfo) => {
     const dShift = await Shift.findOneAndDelete({_id: shiftInfo.id});
+    const deleteEntryEvent = await Event.findOneAndUpdate(
+        {_id: shiftInfo.eventID},
+        { $pull: {shifts: shiftInfo.id}}
+    );
+    const deleteVolShift = await volShift.deleteMany({shift: shiftInfo.id});
+
     return;
  }
 
